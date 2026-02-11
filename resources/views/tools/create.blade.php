@@ -48,15 +48,16 @@
         </div>
 
         <div>
-            <label class="block text-sm font-semibold mb-2" style="color: #374151;">Lokasi</label>
-            <input type="text" name="lokasi" value="{{ old('lokasi') }}" required
+            <label class="block text-sm font-semibold mb-2" style="color: #374151;">Kondisi</label>
+            <input type="text" name="kondisi" value="{{ old('kondisi') }}" required
                    class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200">
         </div>
 
         <div>
-            <label class="block text-sm font-semibold mb-2" style="color: #374151;">Kondisi</label>
-            <input type="text" name="kondisi" value="{{ old('kondisi') }}" required
-                   class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200">
+            <label class="block text-sm font-semibold mb-2" style="color: #374151;">Lokasi Penyimpanan</label>
+            <input type="text" name="lokasi" value="{{ old('lokasi') }}" required
+                placeholder="Contoh: Lemari 1 / Gudang Multimedia / Rak A2"
+                class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200">
         </div>
 
         <div>
@@ -77,25 +78,20 @@
             <select name="jurusan"
                     class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200">
                 <option value="">-- Pilih Jurusan --</option>
-                <option value="TSM" {{ old('jurusan') == 'TSM' ? 'selected' : '' }}>TSM</option>
-                <option value="TKR" {{ old('jurusan') == 'TKR' ? 'selected' : '' }}>TKR</option>
-                <option value="TKJ" {{ old('jurusan') == 'TKJ' ? 'selected' : '' }}>TKJ</option>
-                <option value="RPL" {{ old('jurusan') == 'RPL' ? 'selected' : '' }}>RPL</option>
-                <option value="DKV" {{ old('jurusan') == 'DKV' ? 'selected' : '' }}>DKV</option>
-                <option value="ATPH" {{ old('jurusan') == 'ATPH' ? 'selected' : '' }}>ATPH</option>
-                <option value="APT" {{ old('jurusan') == 'APT' ? 'selected' : '' }}>APT</option>
+                <option value="PPLG" {{ old('jurusan') == 'PPLG' ? 'selected' : '' }}>PPLG</option>
+                <option value="BROADCASTING" {{ old('jurusan') == 'BROADCASTING' ? 'selected' : '' }}>BROADCASTING</option>
+                <option value="ANIMASI" {{ old('jurusan') == 'ANIMASI' ? 'selected' : '' }}>ANIMASI</option>
+                <option value="TEKNIK OTOMOTIF" {{ old('jurusan') == 'TEKNIKOTOMOTIF' ? 'selected' : '' }}>TEKNIK OTOMOTIF</option>
+                 <option value="PENGELASAN" {{ old('jurusan') == 'PENGELASAN' ? 'selected' : '' }}>PENGELASAN</option>
+                  <option value="SEMUA JURUSAN" {{ old('jurusan') == 'SEMUAJURUSAN' ? 'selected' : '' }}>SEMUA JURUSAN</option>
+
+
             </select>
         </div>
 
         <div>
             <label class="block text-sm font-semibold mb-2" style="color: #374151;">Stok</label>
             <input type="number" name="stok" min="0" value="{{ old('stok', 0) }}" required
-                   class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200">
-        </div>
-
-        <div>
-            <label class="block text-sm font-semibold mb-2" style="color: #374151;">Tanggal</label>
-            <input type="date" name="tanggal" value="{{ old('tanggal') }}"
                    class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200">
         </div>
 

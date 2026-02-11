@@ -105,7 +105,7 @@ class LoanController extends Controller
     }
 
     // ADMIN memproses pengembalian
-    public function return($id)
+    public function returnLoan($id)
     {
         $loan = Loan::findOrFail($id);
 

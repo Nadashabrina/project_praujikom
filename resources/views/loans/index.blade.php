@@ -31,7 +31,6 @@
                         <th class="px-6 py-4">Jumlah</th>
                         <th class="px-6 py-4">Tanggal</th>
                         <th class="px-6 py-4">Status</th>
-                        <th class="px-6 py-4">Aksi</th>
                     </tr>
                 </thead>
 
@@ -70,16 +69,7 @@
                             @endif
                         </td>
 
-                        <!-- AKSI -->
-                        <td class="px-6 py-4">
-                            @if(!$loan->tanggal_kembali)
-                                <button
-                                    onclick="openReturnModal({{ $loan->id }}, '{{ $loan->nama_peminjam }}')"
-                                    class="px-4 py-2 bg-amber-400 hover:bg-amber-500 text-white font-semibold rounded-lg shadow transition">
-                                    Kembalikan
-                                </button>
-                            @endif
-                        </td>
+                    
 
                     </tr>
                     @endforeach
@@ -113,8 +103,10 @@
 
         <div class="flex gap-3">
 
-            <form id="returnForm" method="POST" class="w-full">
+            <form id="returnForm" method="POST" action="{{route('loans.return', 0)}}" class="w-full">
                 @csrf
+                <input type="hidden" name="loan_id" id="loan_id">
+
                 <button type="submit"
                     class="w-full py-2 bg-teal-400 hover:bg-teal-500 text-white font-semibold rounded-lg transition">
                     Kembalikan

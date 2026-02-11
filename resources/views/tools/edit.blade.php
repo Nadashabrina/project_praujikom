@@ -67,30 +67,10 @@
             </select>
         </div>
 
-        <div>
-            <label class="block text-sm font-semibold mb-2" style="color: #374151;">Jurusan</label>
-            <select name="jurusan"
-                    class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200">
-                <option value="">-- Pilih Jurusan --</option>
-                <option value="TSM" {{ $tool->jurusan == 'TSM' ? 'selected' : '' }}>TSM</option>
-                <option value="TKR" {{ $tool->jurusan == 'TKR' ? 'selected' : '' }}>TKR</option>
-                <option value="TKJ" {{ $tool->jurusan == 'TKJ' ? 'selected' : '' }}>TKJ</option>
-                <option value="RPL" {{ $tool->jurusan == 'RPL' ? 'selected' : '' }}>RPL</option>
-                <option value="DKV" {{ $tool->jurusan == 'DKV' ? 'selected' : '' }}>DKV</option>
-                <option value="ATPH" {{ $tool->jurusan == 'ATPH' ? 'selected' : '' }}>ATPH</option>
-                <option value="APT" {{ $tool->jurusan == 'APT' ? 'selected' : '' }}>APT</option>
-            </select>
-        </div>
 
         <div>
             <label class="block text-sm font-semibold mb-2" style="color: #374151;">Stok</label>
             <input type="number" name="stok" value="{{ $tool->stok }}" required
-                   class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200">
-        </div>
-
-        <div>
-            <label class="block text-sm font-semibold mb-2" style="color: #374151;">Tanggal</label>
-            <input type="date" name="tanggal" value="{{ $tool->tanggal }}"
                    class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200">
         </div>
 

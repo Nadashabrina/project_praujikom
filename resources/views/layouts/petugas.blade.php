@@ -75,7 +75,7 @@
             <a href="{{ route('petugas.laporan-peminjaman') }}"
                class="flex items-center gap-3 px-4 py-2 rounded-lg transition-all
                {{ request()->is('petugas/laporan-peminjaman*') ? 'bg-blue-500 text-white shadow' : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600' }}">
-                📚 Laporan Peminjaman
+                📚 Daftar Peminjaman
             </a>
 
             <a href="{{ route('petugas.verify-denda-payments') }}"
