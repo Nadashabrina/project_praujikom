@@ -7,6 +7,8 @@ use App\Models\Tool;
 use App\Helpers\DendaHelper;
 use App\Helpers\ActivityHelper;
 use Illuminate\Http\Request;
+use App\Mail\StrukPengembalianMail;
+use Illuminate\Support\Facades\Mail;
 
 class PetugasController extends Controller
 {
@@ -64,7 +66,9 @@ class PetugasController extends Controller
     // Tolak Peminjaman
     public function rejectLoan(Loan $loan)
     {
-        $loan->delete();
+        $loan->update([
+            'status' => 'rejected',
+        ]);
         return redirect()->route('petugas.approve-loans')->with('success', 'Peminjaman ditolak');
     }
 
@@ -254,11 +258,34 @@ class PetugasController extends Controller
         return $pdf->download('Struk-Return-' . $loan->id . '.pdf');
     }
 
+    public function kirimEmail($id)
+    {
+        $loan = Loan::with(['user', 'tool'])->findOrFail($id);
+
+        // 🔥 Tambahin ini (yang tadi kurang)
+        $data = [
+            'loan' => $loan,
+            'tanggal_cetak' => now(),
+        ];
+
+        $pdf = \PDF::loadView('pdf.struk-pengembalian', $data);
+
+        // Cek email
+        if (!$loan->user || !$loan->user->email) {
+            return back()->with('error', 'Email user tidak ditemukan');
+        }
+
+        Mail::to($loan->user->email)
+            ->send(new StrukPengembalianMail($loan, $pdf));
+
+        return back()->with('success', 'Struk berhasil dikirim ke email user');
+    }
+
     // Halaman Laporan
     public function reports(Request $request)
     {
         $filter = $request->get('filter', 'all');
-        
+
         if ($filter === 'pending') {
             $loans = Loan::where('status', 'pending')->with(['user', 'tool'])->get();
         } elseif ($filter === 'approved') {
@@ -303,4 +330,3 @@ class PetugasController extends Controller
         return view('petugas.laporan-peminjaman', compact('loans', 'users', 'tools'));
     }
 }
-

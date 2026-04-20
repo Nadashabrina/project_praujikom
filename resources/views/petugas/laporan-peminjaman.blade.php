@@ -18,9 +18,9 @@
                     <select name="user_id" class="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-600">
                         <option value="">-- Semua Siswa --</option>
                         @foreach($users as $user)
-                            <option value="{{ $user->id }}" {{ request('user_id') == $user->id ? 'selected' : '' }}>
-                                {{ $user->name }}
-                            </option>
+                        <option value="{{ $user->id }}" {{ request('user_id') == $user->id ? 'selected' : '' }}>
+                            {{ $user->name }}
+                        </option>
                         @endforeach
                     </select>
                 </div>
@@ -31,9 +31,9 @@
                     <select name="tool_id" class="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-600">
                         <option value="">-- Semua Alat --</option>
                         @foreach($tools as $tool)
-                            <option value="{{ $tool->id }}" {{ request('tool_id') == $tool->id ? 'selected' : '' }}>
-                                {{ $tool->nama_alat }}
-                            </option>
+                        <option value="{{ $tool->id }}" {{ request('tool_id') == $tool->id ? 'selected' : '' }}>
+                            {{ $tool->nama_alat }}
+                        </option>
                         @endforeach
                     </select>
                 </div>
@@ -91,83 +91,88 @@
         <!-- Tabel Peminjaman -->
         <div class="bg-white rounded-lg shadow overflow-hidden">
             @if ($loans->count() > 0)
-                <table class="w-full">
-                    <thead style="background: #CDEDEA; color: #374151;">
-                        <tr>
-                            <th class="px-6 py-3 text-left text-sm font-semibold">No</th>
-                            <th class="px-6 py-3 text-left text-sm font-semibold">Siswa</th>
-                            <th class="px-6 py-3 text-left text-sm font-semibold">Alat</th>
-                            <th class="px-6 py-3 text-left text-sm font-semibold">Jumlah</th>
-                            <th class="px-6 py-3 text-left text-sm font-semibold">Tanggal Pinjam</th>
-                            <th class="px-6 py-3 text-left text-sm font-semibold">Target Kembali</th>
-                            <th class="px-6 py-3 text-left text-sm font-semibold">Tanggal Kembali</th>
-                            <th class="px-6 py-3 text-left text-sm font-semibold">Status Alat</th>
-                            <th class="px-6 py-3 text-left text-sm font-semibold">Denda</th>
-                            <th class="px-6 py-3 text-left text-sm font-semibold">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-200">
-                        @foreach ($loans as $loan)
-                            <tr class="hover:bg-gray-50 transition">
-                                <td class="px-6 py-4 text-sm text-gray-700">{{ ($loans->currentPage() - 1) * 20 + $loop->iteration }}</td>
-                                <td class="px-6 py-4 text-sm font-semibold text-gray-900">{{ $loan->user->name ?? '-' }}</td>
-                                <td class="px-6 py-4 text-sm text-gray-700">{{ $loan->tool->nama_alat ?? '-' }}</td>
-                                <td class="px-6 py-4 text-sm text-gray-700">{{ $loan->jumlah }}</td>
-                                <td class="px-6 py-4 text-sm text-gray-700">{{ \Carbon\Carbon::parse($loan->tanggal_pinjam)->format('d M Y') }}</td>
-                                <td class="px-6 py-4 text-sm text-gray-700">{{ $loan->tanggal_kembali_target ? \Carbon\Carbon::parse($loan->tanggal_kembali_target)->format('d M Y') : '-' }}</td>
-                                <td class="px-6 py-4 text-sm text-gray-700">{{ \Carbon\Carbon::parse($loan->tanggal_kembali)->format('d M Y') }}</td>
-                                <td class="px-6 py-4 text-sm">
-                                    @if ($loan->status_alat === 'baik')
-                                        <span class="px-2 py-1 bg-green-100 text-green-800 rounded text-xs font-semibold">✓ Baik</span>
-                                    @elseif ($loan->status_alat === 'rusak')
-                                        <span class="px-2 py-1 bg-yellow-100 text-yellow-800 rounded text-xs font-semibold">⚠️ Rusak</span>
-                                    @elseif ($loan->status_alat === 'hilang')
-                                        <span class="px-2 py-1 bg-red-100 text-red-800 rounded text-xs font-semibold">✗ Hilang</span>
-                                    @else
-                                        <span class="px-2 py-1 bg-gray-200 text-gray-800 rounded text-xs font-semibold flex flex-col items-center leading-tight" style="min-width:48px;">
-                                            <span>BELUM</span>
-                                            <span>DIISI</span>
-                                        </span>
-                                    @endif
-                                </td>
-                                <td class="px-6 py-4 text-sm font-semibold">
-                                    @if ($loan->denda > 0)
-                                        <span class="text-red-600">Rp {{ number_format($loan->denda, 0, ',', '.') }}</span>
-                                        <br>
-                                        <small class="text-gray-600">
-                                            {{ $loan->denda_status === 'lunas' ? '✓ Lunas' : ($loan->denda_status ? '⏳ ' . ucfirst(str_replace('_', ' ', $loan->denda_status)) : 'Belum Diisi') }}
-                                        </small>
-                                    @else
-                                        <span class="text-green-600">Rp 0</span>
-                                    @endif
-                                </td>
-                                <td class="px-6 py-4 text-sm">
-                                    <a href="{{ route('petugas.cetak-pengembalian', $loan->id) }}" target="_blank" class="inline-block px-4 py-2 text-gray-800 text-xs font-semibold rounded-lg transition" style="background: #CDEDEA;">
-                                        🖨️ Cetak
-                                    </a>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+            <table class="w-full">
+                <thead style="background: #CDEDEA; color: #374151;">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-sm font-semibold">No</th>
+                        <th class="px-6 py-3 text-left text-sm font-semibold">Siswa</th>
+                        <th class="px-6 py-3 text-left text-sm font-semibold">Alat</th>
+                        <th class="px-6 py-3 text-left text-sm font-semibold">Jumlah</th>
+                        <th class="px-6 py-3 text-left text-sm font-semibold">Tanggal Pinjam</th>
+                        <th class="px-6 py-3 text-left text-sm font-semibold">Target Kembali</th>
+                        <th class="px-6 py-3 text-left text-sm font-semibold">Tanggal Kembali</th>
+                        <th class="px-6 py-3 text-left text-sm font-semibold">Status Alat</th>
+                        <th class="px-6 py-3 text-left text-sm font-semibold">Denda</th>
+                        <th class="px-6 py-3 text-left text-sm font-semibold">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    @foreach ($loans as $loan)
+                    <tr class="hover:bg-gray-50 transition">
+                        <td class="px-6 py-4 text-sm text-gray-700">{{ ($loans->currentPage() - 1) * 20 + $loop->iteration }}</td>
+                        <td class="px-6 py-4 text-sm font-semibold text-gray-900">{{ $loan->user->name ?? '-' }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-700">{{ $loan->tool->nama_alat ?? '-' }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-700">{{ $loan->jumlah }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-700">{{ \Carbon\Carbon::parse($loan->tanggal_pinjam)->format('d M Y') }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-700">{{ $loan->tanggal_kembali_target ? \Carbon\Carbon::parse($loan->tanggal_kembali_target)->format('d M Y') : '-' }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-700">{{ \Carbon\Carbon::parse($loan->tanggal_kembali)->format('d M Y') }}</td>
+                        <td class="px-6 py-4 text-sm">
+                            @if ($loan->status_alat === 'baik')
+                            <span class="px-2 py-1 bg-green-100 text-green-800 rounded text-xs font-semibold">✓ Baik</span>
+                            @elseif ($loan->status_alat === 'rusak')
+                            <span class="px-2 py-1 bg-yellow-100 text-yellow-800 rounded text-xs font-semibold">⚠️ Rusak</span>
+                            @elseif ($loan->status_alat === 'hilang')
+                            <span class="px-2 py-1 bg-red-100 text-red-800 rounded text-xs font-semibold">✗ Hilang</span>
+                            @else
+                            <span class="px-2 py-1 bg-gray-200 text-gray-800 rounded text-xs font-semibold flex flex-col items-center leading-tight" style="min-width:48px;">
+                                <span>BELUM</span>
+                                <span>DIISI</span>
+                            </span>
+                            @endif
+                        </td>
+                        <td class="px-6 py-4 text-sm font-semibold">
+                            @if ($loan->denda > 0)
+                            <span class="text-red-600">Rp {{ number_format($loan->denda, 0, ',', '.') }}</span>
+                            <br>
+                            <small class="text-gray-600">
+                                {{ $loan->denda_status === 'lunas' ? '✓ Lunas' : ($loan->denda_status ? '⏳ ' . ucfirst(str_replace('_', ' ', $loan->denda_status)) : 'Belum Diisi') }}
+                            </small>
+                            @else
+                            <span class="text-green-600">Rp 0</span>
+                            @endif
+                        </td>
+                        <td class="px-6 py-4 text-sm">
+                            <a href="{{ route('petugas.cetak-pengembalian', $loan->id) }}" target="_blank" class="inline-block px-4 py-2 text-gray-800 text-xs font-semibold rounded-lg transition" style="background: #CDEDEA;">
+                                🖨️ Cetak
+                            </a>
+                            <a href="{{ route('petugas.kirim-struk', $loan->id) }}"
+                                class="inline-block px-4 py-2 text-white text-xs font-semibold rounded-lg bg-blue-500 hover:bg-blue-600">
+                                📧 Kirim Struk
+                            </a>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
             @else
-                <div class="p-8 text-center text-gray-500">
-                    <p>Tidak ada data peminjaman yang dikembalikan</p>
-                </div>
+            <div class="p-8 text-center text-gray-500">
+                <p>Tidak ada data peminjaman yang dikembalikan</p>
+            </div>
             @endif
         </div>
 
         <!-- Pagination -->
         @if ($loans->hasPages())
-            <div class="mt-8">
-                {{ $loans->appends(request()->query())->links() }}
-            </div>
+        <div class="mt-8">
+            {{ $loans->appends(request()->query())->links() }}
+        </div>
         @endif
     </div>
 </div>
 
 <style>
     @media print {
+
         /* Hide elemen yang tidak perlu di print */
         .sidebar-petugas,
         .mt-8,
@@ -192,7 +197,8 @@
             padding: 0 !important;
         }
 
-        html, body {
+        html,
+        body {
             width: 100%;
             height: 100%;
             background: white;
@@ -235,7 +241,8 @@
             table-layout: fixed;
         }
 
-        th, td {
+        th,
+        td {
             padding: 3px 2px !important;
             border: 1px solid #333 !important;
             text-align: left;
@@ -330,7 +337,8 @@
         }
 
         /* Typography */
-        h1, .text-3xl {
+        h1,
+        .text-3xl {
             font-size: 14px !important;
             font-weight: bold;
             margin-bottom: 2px;

@@ -6,6 +6,8 @@ use App\Models\Loan;
 use App\Models\Tool;
 use App\Helpers\ActivityHelper;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\StrukPengembalianMail;
 
 class LoanController extends Controller
 {
@@ -53,7 +55,7 @@ class LoanController extends Controller
             'catatan' => $request->catatan ?? null,
             'status' => 'pending'
         ]);
-        
+
         // Catat aktivitas
         ActivityHelper::log('CREATE_PEMINJAMAN', "Ajukan peminjaman alat: {$tool->nama_alat}");
 
@@ -98,7 +100,7 @@ class LoanController extends Controller
     public function reject($id)
     {
         $loan = Loan::findOrFail($id);
-        $loan->status = 'rejected';
+        $loan->status = 'rejected'; // ⬅️ SAMAKAN
         $loan->save();
 
         return back()->with('success', 'Peminjaman ditolak');

@@ -103,7 +103,7 @@
         <div style="display: flex; gap: 0.75rem;">
             <form id="rejectForm" method="POST" style="flex: 1;">
                 @csrf
-                @method('DELETE')
+                @method('PUT')
                 <button type="submit" style="width: 100%; padding: 0.5rem; border-radius: 0.375rem; font-weight: 600; background-color: #e74c3c; color: white; cursor: pointer;">
                     Tolak
                 </button>

@@ -30,12 +30,6 @@
         @csrf
 
         <div>
-            <label class="block text-sm font-semibold mb-2" style="color: #374151;">Kode Alat</label>
-            <input type="text" name="kode_alat" value="{{ old('kode_alat') }}" required
-                   class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200">
-        </div>
-
-        <div>
             <label class="block text-sm font-semibold mb-2" style="color: #374151;">Nama Alat</label>
             <input type="text" name="nama_alat" value="{{ old('nama_alat') }}" required
                    class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200">
@@ -47,11 +41,11 @@
                    class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200">
         </div>
 
-        <div>
+        <!-- <div>
             <label class="block text-sm font-semibold mb-2" style="color: #374151;">Kondisi</label>
             <input type="text" name="kondisi" value="{{ old('kondisi') }}" required
                    class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200">
-        </div>
+        </div> -->
 
         <div>
             <label class="block text-sm font-semibold mb-2" style="color: #374151;">Lokasi Penyimpanan</label>
@@ -73,7 +67,7 @@
             </select>
         </div>
 
-        <div>
+        <!-- <div>
             <label class="block text-sm font-semibold mb-2" style="color: #374151;">Jurusan</label>
             <select name="jurusan"
                     class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200">
@@ -87,7 +81,7 @@
 
 
             </select>
-        </div>
+        </div> -->
 
         <div>
             <label class="block text-sm font-semibold mb-2" style="color: #374151;">Stok</label>

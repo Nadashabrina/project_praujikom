@@ -8,11 +8,31 @@ use Illuminate\Http\Request;
 
 class ToolController extends Controller
 {
-    public function index()
-    {
-        $tools = Tool::all();
-        return view('tools.index', compact('tools'));
+  public function index(Request $request)
+{
+    $query = Tool::with('category');
+
+    // 🔍 Search (nama alat / merk / kode)
+    if ($request->search) {
+        $query->where(function ($q) use ($request) {
+            $q->where('nama_alat', 'like', '%' . $request->search . '%')
+              ->orWhere('merk', 'like', '%' . $request->search . '%')
+              ->orWhere('kode_alat', 'like', '%' . $request->search . '%');
+        });
     }
+
+    // 🏷️ Filter kategori
+    if ($request->category_id) {
+        $query->where('category_id', $request->category_id);
+    }
+
+    $tools = $query->latest()->get();
+
+    // ambil kategori untuk dropdown
+    $categories = \App\Models\Category::all();
+
+    return view('tools.index', compact('tools', 'categories'));
+}
 
     public function create()
     {
@@ -21,23 +41,43 @@ class ToolController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'kode_alat' => 'required',
-            'nama_alat' => 'required',
-            'merk' => 'required',
-            'lokasi' => 'required',
-            'kondisi' => 'required',
-            'stok' => 'required|integer'
-        ]);
+{
+    $request->validate([
+        'nama_alat' => 'required',
+        'merk' => 'required',
+        'lokasi' => 'required',
+        'kondisi' => 'required',
+        'stok' => 'required|integer',
+        'category_id' => 'required'
+    ]);
 
-        $tool = Tool::create($request->all());
-        
-        // Catat aktivitas
-        ActivityHelper::log('CREATE_ALAT', "Tambah alat: {$tool->nama_alat}");
+    // Ambil kategori
+    $category = \App\Models\Category::findOrFail($request->category_id);
 
-        return redirect()->route('tools.index')->with('success', 'Alat berhasil ditambahkan');
-    }
+    // Ambil inisial kategori (contoh: Laptop Komputer → LK)
+    $prefix = collect(explode(' ', $category->nama_kategori))
+        ->map(fn($word) => strtoupper(substr($word, 0, 1)))
+        ->implode('');
+
+    // Hitung jumlah alat dengan kategori yang sama
+    $count = Tool::where('category_id', $category->id)->count() + 1;
+
+    $lastTool = Tool::where('category_id', $category->id)->latest()->first();
+    $number = $lastTool ? ((int) substr($lastTool->kode_alat, -3)) + 1 : 1;
+
+    // Format nomor (001, 002, dst)
+    $kode_alat = $prefix . '-' . str_pad($count, 3, '0', STR_PAD_LEFT);
+
+    // Simpan data
+    $tool = Tool::create([
+        ...$request->all(),
+        'kode_alat' => $kode_alat
+    ]);
+
+    ActivityHelper::log('CREATE_ALAT', "Tambah alat: {$tool->nama_alat}");
+
+    return redirect()->route('tools.index')->with('success', 'Alat berhasil ditambahkan');
+}
 
     public function edit($id)
     {
@@ -49,18 +89,42 @@ class ToolController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'kode_alat' => 'required',
             'nama_alat' => 'required',
             'merk' => 'required',
             'lokasi' => 'required',
             'kondisi' => 'required',
-            'stok' => 'required|integer'
+            'stok' => 'required|integer',
+            'category_id' => 'required'
         ]);
 
         $tool = Tool::findOrFail($id);
-        $tool->update($request->all());
-        
-        // Catat aktivitas
+
+        // Ambil kategori baru
+        $category = \App\Models\Category::findOrFail($request->category_id);
+
+        // Ambil prefix dari kategori
+        $prefix = collect(explode(' ', $category->nama_kategori))
+            ->map(fn($word) => strtoupper(substr($word, 0, 1)))
+            ->implode('');
+
+        // Ambil data terakhir di kategori (kecuali data ini sendiri)
+        $lastTool = Tool::where('category_id', $category->id)
+            ->where('id', '!=', $tool->id)
+            ->orderBy('id', 'desc')
+            ->first();
+
+        $number = $lastTool 
+            ? ((int) substr($lastTool->kode_alat, -3)) + 1 
+            : 1;
+
+        $kode_alat = $prefix . '-' . str_pad($number, 3, '0', STR_PAD_LEFT);
+
+        // Update data
+        $tool->update([
+            ...$request->all(),
+            'kode_alat' => $kode_alat
+        ]);
+
         ActivityHelper::log('UPDATE_ALAT', "Edit alat: {$tool->nama_alat}");
 
         return redirect()->route('tools.index')->with('success', 'Alat berhasil diperbarui');

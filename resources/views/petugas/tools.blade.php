@@ -11,7 +11,7 @@
                 <th class="px-4 py-2" style="color: #374151;">Nama Alat</th>
                 <th class="px-4 py-2" style="color: #374151;">Kategori</th>
                 <th class="px-4 py-2" style="color: #374151;">Stok</th>
-                <th class="px-4 py-2" style="color: #374151;">Jurusan</th>
+                <!-- <th class="px-4 py-2" style="color: #374151;">Jurusan</th> -->
                 <th class="px-4 py-2" style="color: #374151;">Tanggal Input</th>
                 <th class="px-4 py-2" style="color: #374151;">Status</th>
             </tr>
@@ -31,7 +31,7 @@
                         <span class="px-2 py-1 rounded font-semibold text-sm" style="background-color: #FEE2E2; color: #991B1B;">Habis</span>
                     @endif
                 </td>
-                <td class="px-4 py-2" style="color: #374151;">{{ $tool->jurusan ?? '-' }}</td>
+                <!-- <td class="px-4 py-2" style="color: #374151;">{{ $tool->jurusan ?? '-' }}</td> -->
                 <td class="px-4 py-2" style="color: #374151;">{{ $tool->tanggal ? $tool->tanggal->format('d M Y') : '-' }}</td>
                 <td class="px-4 py-2">
                     @if($tool->stok > 0)

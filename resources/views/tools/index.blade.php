@@ -9,6 +9,40 @@
    + Tambah Alat
 </a>
 
+<form method="GET" action="{{ route('tools.index') }}" class="mb-4 flex flex-wrap gap-2">
+
+    <!-- 🔍 Search -->
+    <input type="text" name="search" value="{{ request('search') }}"
+        placeholder="Cari nama alat / merk / kode..."
+        class="px-4 py-2 border rounded w-64">
+
+    <!-- 🏷️ Filter Kategori -->
+    <select name="category_id" class="px-4 py-2 border rounded">
+        <option value="">-- Semua Kategori --</option>
+        @foreach ($categories as $category)
+            <option value="{{ $category->id }}"
+                {{ request('category_id') == $category->id ? 'selected' : '' }}>
+                {{ $category->nama_kategori }}
+            </option>
+        @endforeach
+    </select>
+
+    <!-- 🔘 Button -->
+    <button type="submit"
+        class="px-4 py-2 rounded font-semibold"
+        style="background-color: #CDEDEA; color: #374151;">
+        Cari
+    </button>
+
+    <!-- 🔄 Reset -->
+    <a href="{{ route('tools.index') }}"
+        class="px-4 py-2 rounded font-semibold"
+        style="background-color: #e74c3c; color: white;">
+        Reset
+    </a>
+
+</form>
+
 <div class="overflow-x-auto rounded shadow" style="background-color: #FFF7E6;">
 <table class="min-w-full border">
     <thead style="background-color: #DCEBFA;">
@@ -17,9 +51,9 @@
             <th class="px-4 py-2" style="color: #374151;">Nama Alat</th>
             <th class="px-4 py-2" style="color: #374151;">Merk</th>
             <th class="px-4 py-2" style="color: #374151;">Lokasi</th>
-            <th class="px-4 py-2" style="color: #374151;">Kondisi</th>
+            <!-- <th class="px-4 py-2" style="color: #374151;">Kondisi</th> -->
             <th class="px-4 py-2" style="color: #374151;">Kategori</th>
-            <th class="px-4 py-2" style="color: #374151;">Jurusan</th>
+            <!-- <th class="px-4 py-2" style="color: #374151;">Jurusan</th> -->
             <th class="px-4 py-2" style="color: #374151;">Stok</th>
             <th class="px-4 py-2" style="color: #374151;">Aksi</th>
         </tr>
@@ -31,9 +65,9 @@
             <td class="px-4 py-2">{{ $tool->nama_alat }}</td>
             <td class="px-4 py-2">{{ $tool->merk }}</td>
             <td class="px-4 py-2">{{ $tool->lokasi }}</td>
-            <td class="px-4 py-2">{{ $tool->kondisi }}</td>
+            <!-- <td class="px-4 py-2">{{ $tool->kondisi }}</td> -->
             <td class="px-4 py-2">{{ $tool->category->nama_kategori ?? '-' }}</td>
-            <td class="px-4 py-2">{{ $tool->jurusan }}</td>
+            <!-- <td class="px-4 py-2">{{ $tool->jurusan }}</td> -->
             <td class="px-4 py-2">
                 <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded font-semibold">
                     {{ $tool->stok }}

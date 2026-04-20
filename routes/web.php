@@ -167,7 +167,7 @@ Route::middleware(['auth', 'role:petugas'])->group(function () {
     // SETUJUI PEMINJAMAN
     Route::get('/petugas/approve-loans', [PetugasController::class, 'approveLoanIndex'])->name('petugas.approve-loans');
     Route::put('/petugas/loans/{loan}/approve', [PetugasController::class, 'approveLoan'])->name('petugas.approve-loan');
-    Route::delete('/petugas/loans/{loan}/reject', [PetugasController::class, 'rejectLoan'])->name('petugas.reject-loan');
+    Route::put('/petugas/loans/{loan}/reject', [PetugasController::class, 'rejectLoan'])->name('petugas.reject-loan');
 
     // VALIDASI PENGEMBALIAN
     Route::get('/petugas/validate-returns', [PetugasController::class, 'validateReturnIndex'])->name('petugas.validate-returns');
@@ -186,6 +186,10 @@ Route::middleware(['auth', 'role:petugas'])->group(function () {
     // VERIFIKASI PEMBAYARAN DENDA
     Route::get('/petugas/verify-denda-payments', [DendaPaymentController::class, 'pendingList'])->name('petugas.verify-denda-payments');
     Route::post('/petugas/denda-payments/{dendaPayment}/verify', [DendaPaymentController::class, 'verify'])->name('petugas.verify-denda-payment');
+
+    // kirim email
+    Route::get('/kirim-struk/{id}', [PetugasController::class, 'kirimEmail'])
+    ->name('petugas.kirim-struk');
 
 
 });

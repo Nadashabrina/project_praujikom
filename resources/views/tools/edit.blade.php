@@ -25,12 +25,6 @@
         @method('PUT')
 
         <div>
-            <label class="block text-sm font-semibold mb-2" style="color: #374151;">Kode Alat</label>
-            <input type="text" name="kode_alat" value="{{ $tool->kode_alat }}" required
-                   class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200">
-        </div>
-
-        <div>
             <label class="block text-sm font-semibold mb-2" style="color: #374151;">Nama Alat</label>
             <input type="text" name="nama_alat" value="{{ $tool->nama_alat }}" required
                    class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200">
